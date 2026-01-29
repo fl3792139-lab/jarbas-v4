@@ -1,0 +1,7 @@
+{
+  "name": "JARBAS - Advanced AI",
+  "description": "An ultra-optimized, persistent memory AI assistant specializing in high-level programming and logic. Dedicated to its Master.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
