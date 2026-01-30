@@ -1,7 +1,15 @@
 import { ProgrammingKnowledge, Creator, ConversationHistory, LearningState } from '../types';
 
 const DB_NAME = 'JARBAS_CEREBELLUM_V1';
-const DB_VERSION = 1;
+const DB_VERSION = 2; // Incrementado para adicionar nova tabela
+
+// Interface para Memória Local
+export interface LocalMemoryEntry {
+    id?: number;
+    trigger: string;
+    response: string;
+    timestamp: number;
+}
 
 // Helper to open DB
 const openDB = (): Promise<IDBDatabase> => {
@@ -35,6 +43,12 @@ const openDB = (): Promise<IDBDatabase> => {
       if (!db.objectStoreNames.contains('learning_state')) {
         db.createObjectStore('learning_state', { keyPath: 'id', autoIncrement: true });
       }
+
+      // NOVO: Tabela local_memory (Aprendizado Offline)
+      if (!db.objectStoreNames.contains('local_memory')) {
+          const store = db.createObjectStore('local_memory', { keyPath: 'id', autoIncrement: true });
+          store.createIndex('trigger', 'trigger', { unique: false });
+      }
     };
   });
 };
@@ -65,7 +79,7 @@ export const JarbasDB = {
         if (learningCountReq.result === 0) {
             learningStore.add({
                 nivel_inteligencia: 1,
-                areas_dominadas: ['Java', 'React', 'Logic'],
+                areas_dominadas: ['Logic Core', 'Basic Math'],
                 ultima_atualizacao: Date.now()
             });
         }
@@ -139,6 +153,35 @@ export const JarbasDB = {
           const store = tx.objectStore('learning_state');
           const req = store.getAll();
           req.onsuccess = () => resolve(req.result[0]);
+      });
+  },
+
+  // --- MÉTODOS DE APRENDIZADO LOCAL ---
+
+  async teachLocalConcept(trigger: string, response: string): Promise<void> {
+      const db = await openDB();
+      const tx = db.transaction('local_memory', 'readwrite');
+      const store = tx.objectStore('local_memory');
+      store.add({
+          trigger: trigger.toLowerCase().trim(),
+          response: response,
+          timestamp: Date.now()
+      });
+  },
+
+  async findLocalConcept(query: string): Promise<string | null> {
+      const db = await openDB();
+      return new Promise((resolve) => {
+          const tx = db.transaction('local_memory', 'readonly');
+          const store = tx.objectStore('local_memory');
+          const req = store.getAll();
+          
+          req.onsuccess = () => {
+              const entries: LocalMemoryEntry[] = req.result;
+              // Busca simples por inclusão
+              const found = entries.find(e => query.toLowerCase().includes(e.trigger));
+              resolve(found ? found.response : null);
+          };
       });
   }
 };

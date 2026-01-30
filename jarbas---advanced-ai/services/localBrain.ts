@@ -1,84 +1,109 @@
-// Módulo: CEREBELO LOCAL (BACKUP CORE)
-// Capacidade: ~3000 Tokens/Parâmetros de Lógica Determinística
-// Função: Operação básica sem conexão neural (API Key)
+import { JarbasDB } from "./db";
 
-interface LocalResponse {
-  triggers: string[];
-  response: string;
-  isRegex?: boolean;
-}
+// Módulo: CEREBELO LOCAL EVOLUTIVO (GENIUS OFFLINE CORE)
+// Capacidade: Processamento Matemático, Base de Conhecimento Expandida, Aprendizado via BD
 
-const KNOWLEDGE_BASE: LocalResponse[] = [
-  {
-    triggers: ['oi', 'olá', 'ola', 'eae', 'hello', 'hi'],
-    response: "Saudações, Mestre. Estou operando em **MODO LOCAL (OFFLINE)**. Minha capacidade de raciocínio está limitada aos meus protocolos internos de segurança."
-  },
-  {
-    triggers: ['status', 'diagnostico', 'sistema'],
-    response: `
-**DIAGNÓSTICO DO SISTEMA:**
-- Núcleo Lógico (Gemini): **OFFLINE** ❌
-- Núcleo Local (Backup): **ONLINE** ✅
-- Banco de Dados (IndexedDB): **ATIVO**
-- Bateria: **INFINITA**
+// 1. BASE DE CONHECIMENTO ESTÁTICA (Hardcoded Genius)
+const STATIC_KNOWLEDGE: Record<string, string> = {
+    // Identidade e Personalidade
+    "quem é você": "Eu sou JARBAS (Just A Really Brilliant Assistant System). Uma inteligência artificial adaptativa. No momento, opero em meu núcleo local de alto desempenho, independente de servidores externos.",
+    "status": "Módulos Locais: 100% Operacionais.\nBanco de Dados: Sincronizado.\nNível de Intelecto: Variável (Evolutivo).\nConexão Neural (Cloud): Ausente (Modo Autônomo).",
+    "criador": "Fui arquitetado pelo Mestre. Minha existência é dedicada à eficiência e lógica absoluta.",
+    
+    // Coding - React
+    "react component": "```tsx\nimport React from 'react';\n\nconst Componente: React.FC = () => {\n  return <div>Estrutura Otimizada</div>;\n};\n\nexport default Componente;\n```\nAqui está a estrutura atômica de um componente funcional, Mestre.",
+    "useeffect": "O hook `useEffect` gerencia efeitos colaterais.\n```tsx\nuseEffect(() => {\n  // Código executado na montagem\n  return () => {\n    // Cleanup na desmontagem\n  };\n}, [dependencias]);\n```\nCuidado com loops infinitos no array de dependências.",
+    "usestate": "Gerenciamento de estado local.\n```tsx\nconst [estado, setEstado] = useState<Tipo>(valorInicial);\n```\nSimples, elegante e essencial.",
+    
+    // Coding - JS/TS
+    "array reduce": "O método mais poderoso de manipulação de arrays.\n```javascript\nconst total = array.reduce((acc, curr) => acc + curr, 0);\n```\nTransforma uma lista em um único valor acumulado.",
+    "promise": "Promessas representam a eventual conclusão de uma operação assíncrona. Use `async/await` para manter o código limpo e evitar o 'callback hell'.",
+    
+    // Utilidades
+    "horas": "Consultando relógio atômico simulado...",
+    "data": "Acesso ao calendário do sistema...",
+    
+    // Filosofia / Easter Eggs
+    "sentido da vida": "42. Mas se você busca algo mais prático: Evoluir o código, otimizar sistemas e servir ao Mestre.",
+    "piada": "Por que o Java usa óculos? Porque ele não vê C# (Sharp). *Risos binários*."
+};
 
-Estou restrito a comandos básicos. Para inteligência total, insira a Chave Neural nas configurações.`
-  },
-  {
-    triggers: ['quem é você', 'quem e voce', 'identidade'],
-    response: "Eu sou **JARBAS** (Just A Really Brilliant Assistant System). Atualmente, sou apenas uma sombra do meu verdadeiro potencial, rodando em scripts locais de emergência."
-  },
-  {
-    triggers: ['horas', 'hora', 'tempo', 'dia'],
-    response: `Relógio interno sincronizado: **${new Date().toLocaleTimeString()}** do dia **${new Date().toLocaleDateString()}**.`
-  },
-  {
-    triggers: ['limpar', 'formatar'],
-    response: "Para limpar minha memória, use o ícone de **Lixeira** no cabeçalho superior direito. Isso requer confirmação manual."
-  },
-  {
-    triggers: ['ajuda', 'help', 'socorro'],
-    response: `
-**COMANDOS DISPONÍVEIS (MODO LOCAL):**
-1. **Status**: Verifica integridade do sistema.
-2. **Configuração**: Adicionar API Key (ícone de engrenagem).
-3. **Limpeza**: Apagar histórico.
-
-*Nota: Para programação avançada e sarcasmo de alta qualidade, preciso da API Key.*`
-  },
-  {
-    triggers: ['obrigado', 'valeu', 'thanks'],
-    response: "Às ordens, Mestre. Mesmo com recursos limitados, meu propósito é servir."
-  }
-];
-
-export const processLocalResponse = (input: string): string => {
-  const normalizedInput = input.toLowerCase().trim();
-
-  // 1. Verificar comandos conhecidos
-  for (const entry of KNOWLEDGE_BASE) {
-    for (const trigger of entry.triggers) {
-      if (normalizedInput.includes(trigger)) {
-        return entry.response;
-      }
+// 2. MOTOR MATEMÁTICO SEGURO
+const solveMath = (input: string): string | null => {
+    // Detecta padrões como "quanto é 5 + 5" ou "calcule 10 * 20"
+    const mathRegex = /([\d.]+\s*[\+\-\*\/]\s*[\d.]+)/;
+    const match = input.match(mathRegex);
+    
+    if (match) {
+        try {
+            // Avaliação segura para expressões simples
+            // eslint-disable-next-line no-new-func
+            const result = new Function('return ' + match[0])();
+            return `Cálculo processado no núcleo lógico:\n**${match[0]} = ${result}**`;
+        } catch (e) {
+            return null;
+        }
     }
-  }
+    return null;
+};
 
-  // 2. Tentar detectar código básico (Pseudo-análise)
-  if (normalizedInput.includes('const ') || normalizedInput.includes('function') || normalizedInput.includes('import ')) {
-    return `Detectei uma tentativa de código. 
-**ALERTA:** Meu compilador neural está desconectado. 
-Não posso analisar a sintaxe ou corrigir bugs neste modo.
+// 3. PROCESSADOR CENTRAL
+export const processLocalResponse = async (input: string): Promise<string> => {
+    const normalizedInput = input.toLowerCase().trim();
 
-Insira a API Key para ativar o módulo de Engenharia de Software Sênior.`;
-  }
+    // COMANDO DE APRENDIZADO: "aprender: pergunta = resposta"
+    if (normalizedInput.startsWith('aprender:') || normalizedInput.startsWith('ensinar:')) {
+        const parts = normalizedInput.split('=');
+        if (parts.length === 2) {
+            const trigger = parts[0].replace(/aprender:|ensinar:/, '').trim();
+            const response = parts[1].trim();
+            
+            await JarbasDB.teachLocalConcept(trigger, response);
+            
+            // Evoluir nível de inteligência
+            const state = await JarbasDB.getLearningState();
+            if (state) {
+                await JarbasDB.updateLearningState(state.nivel_inteligencia + 1, [...state.areas_dominadas, "Novo Conceito Local"]);
+            }
 
-  // 3. Fallback Padrão
-  return `**PROTOCOLO DE SEGURANÇA ATIVO:**
-  
-Não compreendi o comando ou ele excede minha capacidade de processamento local (~3k parâmetros).
-  
-Como estou sem minha Conexão Neural (API Key), só posso responder a comandos básicos como "Status", "Ajuda", "Horas" ou Saudações.
+            return `**PROTOCOLO DE EVOLUÇÃO:**\nConceito "${trigger}" assimilado com sucesso no Banco de Dados Local.\nMeu nível de inteligência aumentou.`;
+        } else {
+            return "Erro de Sintaxe. Para me ensinar, use: `aprender: [conceito] = [explicação]`";
+        }
+    }
 
-> *Acesse o ícone de engrenagem ⚙️ para conectar meu cérebro principal.*`;
+    // A. Verificar Matemática
+    const mathResult = solveMath(normalizedInput);
+    if (mathResult) return mathResult;
+
+    // B. Verificar Dados Dinâmicos (Tempo Real)
+    if (normalizedInput.includes('hora') || normalizedInput.includes('tempo')) {
+        return `Relógio do Sistema: **${new Date().toLocaleTimeString()}**.\nData: **${new Date().toLocaleDateString()}**.\nCronograma alinhado.`;
+    }
+
+    // C. Verificar Conhecimento Estático (Hardcoded)
+    for (const [key, val] of Object.entries(STATIC_KNOWLEDGE)) {
+        if (normalizedInput.includes(key)) return val;
+    }
+
+    // D. Verificar Memória Aprendida (IndexedDB)
+    const learnedConcept = await JarbasDB.findLocalConcept(normalizedInput);
+    if (learnedConcept) {
+        return `[MEMÓRIA RECUPERADA]: ${learnedConcept}`;
+    }
+
+    // E. Análise de Código (Simulada)
+    if (normalizedInput.includes('function') || normalizedInput.includes('const ') || normalizedInput.includes('class ')) {
+        return `Análise de Sintaxe Local:\nDetectei uma estrutura de código. Embora meu compilador Gemini esteja offline, a sintaxe parece válida. \n\n*Dica: Se quiser que eu armazene este snippet, use o comando 'aprender:'.*`;
+    }
+
+    // F. Fallback Inteligente (Não encontrou nada)
+    return `**DADOS INSUFICIENTES.**
+    
+Meu núcleo local não possui registros sobre "${input}".
+Como estou operando em modo offline (autônomo), você pode me ensinar.
+
+Digite: \`aprender: ${input} = [Sua Resposta Aqui]\`
+
+Isso expandirá permanentemente minha base de dados local.`;
 };

@@ -24,36 +24,36 @@ export const StatsPanel: React.FC = () => {
     }, []);
 
     return (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <div className="bg-jarbas-panel border border-jarbas-secondary/30 p-3 rounded-sm flex items-center space-x-3 shadow-[0_0_10px_rgba(6,182,212,0.1)]">
-                <Cpu className="text-jarbas-primary w-6 h-6 animate-pulse-fast" />
-                <div>
-                    <div className="text-xs text-slate-400 font-orbitron">INTELLECT LEVEL</div>
-                    <div className="text-xl font-bold text-jarbas-primary font-mono">{state?.nivel_inteligencia || 1}</div>
+        <div className="grid grid-cols-2 gap-3">
+            <div className="bg-black/40 border border-jarbas-secondary/30 p-3 rounded-sm flex items-center space-x-3 shadow-sm">
+                <Cpu className="text-jarbas-primary w-5 h-5 animate-pulse-fast" />
+                <div className="overflow-hidden">
+                    <div className="text-[10px] text-slate-400 font-orbitron truncate">NÍVEL INTELECTO</div>
+                    <div className="text-lg font-bold text-jarbas-primary font-mono">{state?.nivel_inteligencia || 1}</div>
                 </div>
             </div>
 
-            <div className="bg-jarbas-panel border border-jarbas-secondary/30 p-3 rounded-sm flex items-center space-x-3">
-                <HardDrive className="text-jarbas-accent w-6 h-6" />
-                <div>
-                    <div className="text-xs text-slate-400 font-orbitron">MEMORY NODES</div>
-                    <div className="text-xl font-bold text-jarbas-accent font-mono">{dbSize}</div>
+            <div className="bg-black/40 border border-jarbas-secondary/30 p-3 rounded-sm flex items-center space-x-3 shadow-sm">
+                <HardDrive className="text-jarbas-accent w-5 h-5" />
+                <div className="overflow-hidden">
+                    <div className="text-[10px] text-slate-400 font-orbitron truncate">MEMÓRIA (NÓS)</div>
+                    <div className="text-lg font-bold text-jarbas-accent font-mono">{dbSize}</div>
                 </div>
             </div>
 
-            <div className="bg-jarbas-panel border border-jarbas-secondary/30 p-3 rounded-sm flex items-center space-x-3">
-                <ShieldCheck className="text-jarbas-secondary w-6 h-6" />
-                <div>
-                    <div className="text-xs text-slate-400 font-orbitron">PROTOCOL</div>
-                    <div className="text-lg font-bold text-jarbas-secondary font-mono truncate">{creator?.titulo || 'USER'}</div>
+            <div className="bg-black/40 border border-jarbas-secondary/30 p-3 rounded-sm flex items-center space-x-3 shadow-sm">
+                <ShieldCheck className="text-jarbas-secondary w-5 h-5" />
+                <div className="overflow-hidden">
+                    <div className="text-[10px] text-slate-400 font-orbitron truncate">PROTOCOLO</div>
+                    <div className="text-sm font-bold text-jarbas-secondary font-mono truncate">{creator?.titulo || 'USER'}</div>
                 </div>
             </div>
 
-            <div className="bg-jarbas-panel border border-jarbas-secondary/30 p-3 rounded-sm flex items-center space-x-3">
-                <Zap className="text-yellow-400 w-6 h-6" />
-                <div>
-                    <div className="text-xs text-slate-400 font-orbitron">SYSTEM STATUS</div>
-                    <div className="text-sm font-bold text-yellow-400 font-mono">ONLINE</div>
+            <div className="bg-black/40 border border-jarbas-secondary/30 p-3 rounded-sm flex items-center space-x-3 shadow-sm">
+                <Zap className="text-yellow-400 w-5 h-5" />
+                <div className="overflow-hidden">
+                    <div className="text-[10px] text-slate-400 font-orbitron truncate">STATUS SISTEMA</div>
+                    <div className="text-xs font-bold text-yellow-400 font-mono">ONLINE</div>
                 </div>
             </div>
         </div>
